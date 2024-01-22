@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://www.electrichybridvehicletechnology.com/wp-content/uploads/2020/10/RPV-Rivian-Sept2020-AEM04487-cropped.jpg');
+            background-size: cover;
+            height: 100vh;
+            color: black;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        p {
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="number"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid black;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+         <h1>Ecommerce Shipping Prediction</h1>
+        <p>
+            Ecommerce shipping prediction is the process of estimating whether the product reached on time which is based on various factors such as the origin and destination of the package, the shipping method selected by the customer, the carrier used for shipping, and any potential delays or issues that may arise during the shipping process. Machine learning models can be used to make accurate predictions about shipping times based on historical data and real-time updates from carriers. These models may take into account factors such as weather conditions, traffic, and other external factors that can impact delivery times. Overall, Ecommerce shipping prediction is an important tool for ecommerce businesses that want to provide accurate delivery estimates to their customers and improve their overall customer experience.
+        </p>
+        <h2>Input Fields</h2>
+
+        <form action="/predict" method="post">
+              <label for="Warehouse_block">Warehouse Block:</label>
+            <select id="Warehouse_block" name="Warehouse_block">
+                <option value="F">F</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+            </select>
+ 
+            <label for="Prior_purchases">Prior Purchases:</label>
+            <input type="number" name="Prior_purchases" id="Prior_purchases" min="2" required>
+ 
+            <label for="Product_importance">Product Importance:</label>
+            <select name="Product_importance" id="Product_importance">
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+            </select>
+ 
+            <label for="Mode_of_shipment">Mode of Shipment:</label>
+            <select id="Mode_of_shipment" name="Mode_of_shipment">
+                <option value="Flight">Flight</option>
+                <option value="Ship">Ship</option>
+                <option value="Road">Road</option>
+            </select>
+ 
+            <label for="Customer_care_calls">Customer Care Calls:</label>
+            <input type="number" name="Customer_care_calls" id="Customer_care_calls" min="1" required>
+ 
+            <label for="Gender">Gender:</label>
+            <select id="Gender" name="Gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+ 
+            <label for="Customer_rating">Customer Rating:</label>
+            <input type="number" name="Customer_rating" id="Customer_rating" min="1" required>
+ 
+            <label for="Cost_of_the_product">Cost of the Product:</label>
+            <input type="number" name="Cost_of_the_product" id="Cost_of_the_product" min="1" required>
+ 
+            <label for="Discount_offered">Discount Offered:</label>
+            <input type="number" name="Discount_offered" id="Discount_offered" min="1" required>
+ 
+            <label for="Weight_in_grams">Weight in Grams:</label>
+            <input type="number" name="Weight_in_grams" id="Weight_in_grams" min="1" required>
+
+            <!-- Add an ID to the form for the JavaScript event listener -->
+            <input type="submit" id="predictionForm" value="Start Prediction">
+            <p id="predictionResult"></p>
+        </form>
+    </div>
+
+    <script>
+       // Correct the ID used in the event listener
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+        
+            // Get form data
+            const formData = new FormData(this);
+        
+            // Make a POST request to the server
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Display the prediction result
+                document.getElementById('predictionResult').innerText = data;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        });
+        
+    </script>
+</body>
+</html>
